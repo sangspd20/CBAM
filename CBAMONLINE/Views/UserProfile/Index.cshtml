@@ -1,0 +1,123 @@
+﻿@using CBAMONLINE.Infrastructure.Constants;
+@using CBAMONLINE.Models.UserProfile;
+@using System.Globalization;
+@using CookieManager;
+@inject ICookieManager _cookieManager;
+@{
+    MyCookie<UserProfile> userCookieObj = _cookieManager.Get<MyCookie<UserProfile>>(CookieConstants.USER_COOKIE);
+
+    UserProfile userProfile = new UserProfile();
+    if (userCookieObj != null)
+    {
+        userProfile = userCookieObj.Value;
+    }
+
+    ViewData["Title"] = "Thông tin người dùng";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var user = userProfile;
+    var name = user.lastName + " " + user.firstName;
+    string price = string.Format(new CultureInfo("vi-VN"), "{0:#,##} VNĐ", user.price);
+    var avatar = string.IsNullOrEmpty(user.avatar) ? "/images/user-img.png" : user.avatar;
+    var breadcrum = "Dashboard";
+}
+
+<partial name="_Breadcrum" model="@breadcrum" />
+
+<!-- Layout -->
+<div class="profile">
+    <div class="d-flex align-items-start align-items-sm-end flex-column flex-sm-row">
+        <div class="avatar me-5 size-120 br-width-5-white">
+            <img src="@avatar" alt="user-img" />
+        </div>
+        <div class="profile-info">
+            <h4 class="fs-22 mb-sm-3">@name</h4>
+            <div class="d-flex align-items-sm-cen flex-column flex-sm-row">
+                <div class="d-flex align-items-center me-4">
+                    <i class="bx bx-envelope me-2"></i>
+                    @user.email
+                </div>
+                <div class="d-flex align-items-center me-4">
+                    <i class="fa fa-money me-2 fs-6" aria-hidden="true"></i>
+                    Số dư tài khoản: @price
+                </div>
+                <div class="d-flex align-items-center">
+                    <i class="bx bxs-user me-2 mt-i-2"></i>
+                    Thành viên
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="user-tabs mb-4">
+    <ul class="nav nav-tabs d-flex justify-content-center justify-content-sm-start" id="userTab" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="home-tab" onclick="getRecentExamHistory()" data-bs-toggle="tab" data-bs-target="#home" type="button"
+                    role="tab" aria-controls="home" aria-selected="true">
+                <i class="bx bx-home"></i>Dashboard
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="account-tab" data-bs-toggle="tab" data-bs-target="#account" type="button"
+                    role="tab" aria-controls="account" aria-selected="false">
+                <i class="bx bx-user"></i>Tài khoản
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="transaction-tab" onclick="getPaymentHistory()" data-bs-toggle="tab" data-bs-target="#transaction" type="button"
+                    role="tab" aria-controls="transaction" aria-selected="false">
+                <i class="bx bx-receipt"></i>Lịch sử giao dịch
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="exam-tab" onclick="getExamHistory()" data-bs-toggle="tab" data-bs-target="#exam" type="button" role="tab"
+                    aria-controls="exam" aria-selected="false">
+                <i class="bx bx-grid-alt"></i>Lịch sử thi
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="notification-tab" onclick="getNotificationHistory()" data-bs-toggle="tab" data-bs-target="#notification"
+                    type="button" role="tab" aria-controls="notification" aria-selected="false">
+                <i class="bx bx-bell"></i>Thông báo
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="card-tab" data-bs-toggle="tab" data-bs-target="#card" type="button" role="tab"
+                    aria-controls="card" aria-selected="false">
+                <i class='bx bx-credit-card'></i>Nạp thẻ
+            </button>
+        </li>
+    </ul>
+    <div class="tab-content" id="myTabContent">
+        <!-- Dashboard -->
+        <partial name="~/Views/UserProfile/Index/_Dashboard.cshtml" model="user" />
+
+        <!-- Tài khoản -->
+        <partial name="~/Views/UserProfile/Index/_Account.cshtml" />
+
+        <!-- Lịch sử giao dịch -->
+        <partial name="~/Views/UserProfile/Index/_PaymentHistory.cshtml" />
+
+        <!-- Lịch sử thi -->
+        <partial name="~/Views/UserProfile/Index/_ExamHistory.cshtml" />
+
+        <!-- Thông báo -->
+        <partial name="~/Views/UserProfile/Index/_Notification.cshtml" />
+
+        <!-- Nạp thẻ -->
+        <partial name="~/Views/UserProfile/Index/_Card.cshtml" />
+    </div>
+
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    <script asp-append-version="true">
+        var userProfile = @Json.Serialize(userProfile)
+    </script>
+    <script src="~/js/userProfile.js" asp-append-version="true"></script>
+    <script src="~/js/examHistory.js" asp-append-version="true"></script>
+    <script src="~/js/notification.js" asp-append-version="true"></script>
+    <script src="~/js/card.js" asp-append-version="true"></script>
+}
+

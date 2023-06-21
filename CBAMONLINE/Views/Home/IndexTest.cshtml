@@ -1,0 +1,76 @@
+﻿@*@model CBAMONLINE.Models.Auth.Login.LoginRequest
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+
+
+<form id="testForm" enctype="multipart/form-data">
+    <input asp-for="account" type="text" id="password" />
+    <span class="text-danger" asp-validation-for="account" ></span>
+
+    <input asp-for="password" type="text" id="acccount" />
+    <span class="text-danger" asp-validation-for="password" ></span>
+
+    <div class="col-md-6">
+        <div class="form-group">
+            <label asp-for="ProfileImage" class="control-label"></label>
+            <div class="custom-file">
+                <input asp-for="ProfileImage" class="custom-file-input" id="customFile">
+                <label class="custom-file-label" for="customFile">Choose file</label>
+            </div>
+            <span asp-validation-for="ProfileImage" class="text-danger"></span>
+        </div>
+    </div>
+
+    <button type="button" onclick="testFormFunc()">
+        test
+    </button>
+</form>
+
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js" integrity="sha512-rstIgDs0xPgmG6RX1Aba4KV5cWJbAMcvRCVmglpam9SoHZiUCyQVDdH2LPlxoHtrv17XWblE/V/PP+Tr04hbtA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/4.0.0/jquery.validate.unobtrusive.min.js" integrity="sha512-xq+Vm8jC94ynOikewaQXMEkJIOBp7iArs3IhFWSWdRT3Pq8wFz46p+ZDFAR7kHnSFf+zUv52B3prRYnbDRdgog==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script type="text/javascript">
+   
+    $(".custom-file-input").on("change", function () {
+        var fileName = $(this).val().split("\\").pop();
+        $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+    });
+
+
+    function testFormFunc() {
+        if ($("#testForm").valid()) {
+            var formData = new FormData();
+            //formData.append("userProfile", $("#testForm").serialize());
+            var userProfile = {
+                acccount: $("#acccount").val(),
+                password: $("#password").val()
+            }
+
+            formData.append("userProfile", JSON.stringify(userProfile));
+            formData.append("postedFile1", $("#customFile")[0].files[0]);
+
+            $.ajax({
+                url: "/Home/SaveStudentWithSerialize",
+                type: "POST",
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    alert(response);
+                },
+                error: function (request, status, error) {
+                    alert(request.responseText);
+                }
+
+            });
+        }
+    }
+</script>*@

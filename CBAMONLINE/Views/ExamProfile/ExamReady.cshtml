@@ -1,0 +1,180 @@
+﻿@model CBAMONLINE.Models.Contest.ContestItem;
+
+@{
+    ViewData["Title"] = "ExamReady";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var breadcrum = "Cuộc thi";
+    var contestId = ViewBag.ContestId;
+    var isMustCapturePhoto = ViewBag.IsMustCapturePhoto;
+
+    var name = Model.name;
+    var timeStart = Model.timeStart;
+    var childId = Model.id;
+    var description = Model.description;
+    var avatar = Model.avatar;
+    var isRegisted = Model.isRegisted.ToString().ToLower();
+    var finished = Model.finished.ToString().ToLower();
+}
+
+<partial name="_Breadcrum" model="@breadcrum" />
+
+<input id="contestId" hidden value="@contestId" />
+<input id="isMustCapturePhoto" hidden value="@isMustCapturePhoto" />
+<input id="timeStart" hidden value="@timeStart" />
+<input id="childId" hidden value="@childId" />
+<input id="avatar" hidden value="@avatar" />
+<input id="isRegisted" hidden value="@isRegisted" />
+<input id="finished" hidden value="@finished" />
+
+
+<!-- Layout -->
+<div class="exam-subject">
+    <p id="contestName" class="fs-26 text-purple-01">@name</p>
+    <ul class="steps">
+        <li>
+            <span class="step-number">1</span>
+            <div class="step-text">
+                <p class="step-content-title">Hướng dẫn làm bài thi</p>
+                <p class="step-content-desc">Giới thiệu về thể cuộc thi</p>
+            </div>
+        </li>
+        <li>
+            <span class="step-number">2</span>
+            <div class="step-text">
+                <p class="step-content-title">Chụp ảnh</p>
+                <p class="step-content-desc">Xác nhận người thi</p>
+            </div>
+        </li>
+        <li>
+            <span class="step-number">3</span>
+            <div class="step-text">
+                <p class="step-content-title">Làm bài thi</p>
+                <p class="step-content-desc">Có thể bắt đầu thi</p>
+            </div>
+        </li>
+    </ul>
+    <div class="step-wrapper text">
+        <div class="step-content fs-16">
+            <p class="fs-20 text-gray-04 mb-3">Hướng dẫn làm bài thi</p>
+            <p class="mb-3">@description</p>
+            <p>1. Các bước làm bài</p>
+            <div class="ps-4">
+                <ul class="list-style-dot">
+                    <li class="mt-abs-16">Bước 1: Đọc thông tin câu hỏi.</li>
+                    <li class="mt-abs-16">Bước 2: Chọn Phương án đúng( phương án chọn sẽ được đánh dấu màu xanh).</li>
+                    <li class="mt-abs-16">Bước 3: Lựa chọn các câu tiếp theo đến hết.</li>
+                    <li class="mt-abs-16">Bước 4: Chọn nút NỘP BÀI để hoàn thành bài thi.</li>
+                </ul>
+            </div>
+            <p class="mt-5">2. Một số lưu ý</p>
+            <div class="ps-4">
+                <ul class="list-style-dot">
+                    <li class="mt-abs-16">
+                        Thời gian sẽ đếm ngược về 0, khi về 0 hệ thống sẽ tự động thu bài và
+                        thông
+                        báo kết quả.
+                    </li>
+                    <li class="mt-abs-16">
+                        Khi trả lời hết các câu hỏi, bạn chọn nút "NỘP BÀI" màu xanh bên phải.
+                    </li>
+                    <li class="mt-abs-16">
+                        Có thể chỏ chuột lên thanh tiến độ màu xanh để đến vị trí câu cần quan
+                        tâm.
+                    </li>
+                    <li class="mt-abs-16">
+                        Bạn không trả lời câu nào thanh tiến độ sẽ trống (màu trắng vị trí
+                        đó).
+                    </li>
+                    <li class="mt-abs-16">
+                        Khi kết thúc bài thi bạn có thể xem được đáp án đúng,sai so với hệ
+                        thống.
+                    </li>
+                    <li class="text-red-01 mt-abs-16">
+                        Bạn nên chuẩn bị sẵn giấy nháp, bút, máy tính và các dụng
+                        cụ
+                        học tập hỗ trợ việc làm bài.
+                    </li>
+                    <li class="text-red-01 mt-abs-16">
+                        Chúng tôi khuyến cáo bạn không nên sử dụng sách và tài
+                        liệu
+                        trong khi làm bài.
+                    </li>
+                </ul>
+            </div>
+            <div class="form-group">
+                <button class="btn btn-light" disabled><i class="fa fa-angle-left me-2" aria-hidden="true"></i> Quay lại</button>
+                <button class="btn btn-primary next">Tiếp theo <i class="fa fa-angle-right ms-2" aria-hidden="true"></i></button>
+            </div>
+        </div>
+        <div class="step-content">
+            <p class="fs-20 text-gray-04 mb-2">Chụp ảnh xác minh người làm bài thi</p>
+            <p class="text-gray-05 mb-abs-32">Hình ảnh được lưu lại để xác minh người dùng đã làm bài thi.</p>
+            @if (!string.IsNullOrEmpty(avatar))
+            {
+                <div id="avatar-wrapper" class="text-center mx-auto">
+                    <img src="@avatar" />
+                </div>
+            }
+
+            @if (string.IsNullOrEmpty(avatar))
+            {
+                <div class="text-center">
+                    <img id="imgCapture" />
+                    <div id="results" class=" mx-auto"></div>
+
+                    <div id="my-camera" class=" mx-auto d-none">
+                    </div>
+
+                    <div id="camera-icon" class="verify-camera mx-auto">
+                        <img src="~/images/user-icon-verify.png" alt="user-icon-verify">
+                    </div>
+                    <div class="form-check my-4 d-flex align-items-end justify-content-center fs-14">
+                        <input class="form-check-input" type="checkbox" id="agreeCapture">
+                        <label class="form-check-label ms-2 mt-2" for="agree">
+                            Tôi đồng ý chụp ảnh xác minh trước khi làm bài kiểm tra
+                        </label>
+                    </div>
+                    <button id="show-camera" onclick="showCamera(this)" class="btn verify-camera-btn">Chụp ảnh xác minh</button>
+                    <button id="take-photo" onclick="capturePhoto()" class="btn verify-camera-btn d-none">Chụp ảnh</button>
+                </div>
+            }
+            <div class="form-group">
+                <button class="btn btn-primary back"><i class="fa fa-angle-left me-2" aria-hidden="true"></i> Quay lại</button>
+                <button id="finish-capture-image" onclick="finishCapture()" class="btn btn-primary next">Tiếp theo <i class="fa fa-angle-right ms-2" aria-hidden="true"></i></button>
+            </div>
+        </div>
+        <div class="step-content">
+            <div class="py-abs-15 br-radius-4 bg-green-01 text-green px-3 fs-24 d-flex align-items-center mb-abs-12">
+                <img src="~/images/icon-check.png" alt="icon-check" class="mr-abs-28">
+                Hoàn thành
+            </div>
+
+            <div class="text-center mb-4">
+                <img src="~/images/register-finish.png" alt="register-finish">
+            </div>
+            <p class="fs-20">Xin cảm ơn 😇</p>
+            <div class="ps-4 mt-4">
+                <ul class="list-style-dot fs-14">
+                    <li class="mb-2">Bàn đã hoàn thành xác nhận hình ảnh người tham gia.</li>
+                    <li>Bây giờ bạn đã có thể tham gia cuộc thi.</li>
+                </ul>
+            </div>
+            <p class="fs-16 my-4">Hệ thống cung cấp gợi ý cho một số phương án tùy thuộc vào độ dễ, khó của câu hỏi sau khi bạn hoàn thành bài thi.</p>
+            <div class="text-center bg-orange text-orange fs-20 p-abs-12 br-radius-4">"CHÚC BẠN LÀM BÀI THẬT TỐT"</div>
+            <div class="form-group">
+                <button class="btn btn-primary back"><i class="fa fa-angle-left me-2" aria-hidden="true"></i> Quay lại</button>
+                <div id="count-down-ready" class="count-down-time ms-auto">
+                    <span class="count-down-item">30</span>
+                    <span class="count-down-item">00</span>
+                </div>
+                <button onclick="startExercise()" id="btn-start-contest" class="btn btn-success d-none">Bắt đầu thi <i class="fa fa-angle-right ms-2" aria-hidden="true"></i></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/lib/webcamjs/webcam.min.js"></script>
+    <script src="~/js/examReady.js" asp-append-version="true"></script>
+}

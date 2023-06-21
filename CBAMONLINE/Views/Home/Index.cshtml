@@ -1,0 +1,635 @@
+﻿@using CBAMONLINE.Infrastructure.Constants;
+@using CBAMONLINE.Models.Auth.Login;
+@using Newtonsoft.Json;
+@model CBAMONLINE.Models.ViewModel.HomeViewModel
+@using CookieManager;
+@inject ICookieManager _cookieManager;
+
+@{
+    Layout = null;
+
+    MyCookie<LoginResponse> authCookieObj = _cookieManager.Get<MyCookie<LoginResponse>>(CookieConstants.AUTH_COOKIE);
+
+    LoginResponse loginRes = new LoginResponse();
+    string name = "";
+    string avatar = "";
+    if (authCookieObj != null)
+    {
+        loginRes = authCookieObj.Value;
+        name = loginRes.fullName;
+        avatar = !string.IsNullOrEmpty(loginRes.avatar) ? loginRes.avatar : "./images/user-img.png";
+    }
+
+    var systemCounter = Model.SystemCounter;
+    var news = Model.News;
+    var libs = Model.Libs;
+    var firstLibs = libs != null && libs.Count > 0 ? libs[0] : null;
+    var contests = Model.Contests;
+
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>CBAM ONLINE</title>
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <!-- Bootstrap core CSS -->
+    <link href="~/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/lib/simplebar/simplebar.css" rel="stylesheet" />
+
+    <!-- Custom fonts for this template -->
+    <link href="~/lib/fonts/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/lib/fonts/boxicons.css" rel="stylesheet" type="text/css" />
+    <!-- Plugin CSS -->
+    <link href="~/lib/toastr.js/toastr.min.css" rel="stylesheet" />
+    <!-- Custom styles for this template -->
+    <link href="~/css/main.css" asp-append-version="true" rel="stylesheet" />
+</head>
+
+<body class="d-flex flex-column min-vh-100 home-page">
+    <input value="@name" hidden id="nameOfUser" />
+    <input value="@ViewBag.IsShowAdsModal" hidden id="isShowAdsModal" />
+
+    <!-- Navigation -->
+    <div class="banner banner-home mb-sm-5">
+        <partial name="_NavBar" />
+        <div class="position-relative banner-section">
+            <img src="~/images/banner-bg.png" alt="banner-bg" class="img-fluid" />
+            <div class="banner-content pt-4 pt-xl-0">
+                <div class="container-fluid container-lg flex-fill d-flex flex-column">
+                    <div class="row mx-0 flex-fill d-flex flex-column">
+                        <div class="col-11 col-lg-10 col-xl-8 col-xxl-6 flex-fill d-flex flex-column justify-content-end justify-content-xl-between">
+                            <!-- A div empty for layout -->
+                            <div class="empty d-none d-xl-block"></div>
+                            <div class="text-white">
+                                <h1 class="banner-title mb-3 fw-bold">Hệ thống luyện, thi đánh giá năng lực và ngân hàng câu hỏi</h1>
+                                <p class="fs-16 mt-2 mb-abs-32">
+                                    Cung cấp ngân hàng câu hỏi cho khối tiểu học, THCS, THPT và Luyện theo các chủ đề, tổ chức thi và nhận chứng chỉ cho các kì thi đánh giá năng lực.
+                                </p>
+                                <a asp-action="SignUp" asp-controller="Auth" class="fs-18 btn btn-light w-abs-min-160">Đăng ký</a>
+                            </div>
+                            <div class="fw-bold mt-4">
+                                <div class="d-flex align-items-center mx-i-15">
+                                    <div class="px-abs-15">
+                                        <div class="box-item-home box-block box-banner">
+                                            <div class="box-inside">
+                                                <div class="bg-red-02 number-info br-radius-25">@systemCounter.members</div>
+                                                <p class="mt-4 fs-18 text-center">Học viên tham gia</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="px-abs-15">
+                                        <div class="box-item-home box-block box-banner">
+                                            <div class="box-inside">
+                                                <div class="bg-moss-green number-info br-radius-25">@systemCounter.contests</div>
+                                                <p class="mt-4 fs-18 text-center">Cuộc thi được tổ chức</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="px-abs-15">
+                                        <div class="box-item-home box-block box-banner">
+                                            <div class="box-inside">
+                                                <div class="bg-light-blue number-info br-radius-25">@systemCounter.examnitations</div>
+                                                <p class="mt-4 fs-18 text-center">Bộ đề thi</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="mt-abs-30 fs-32">Những con số biết nói</p>
+                                <p class="mt-2 fs-16 mb-3 fw-light">
+                                    Đơn vị chính thức cung cấp ngân hàng câu hỏi cho các cấp học trên toàn quốc.
+                                    Cấp chứng chỉ có giá trị trong 11 nước ASIAN, được Bộ Giáo Dục và Đào Tạo công nhận.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Banner mobile -->
+        <div class="d-sm-none">
+            <img src="~/images/banner-bg.png" alt="banner-bg" class="img-fluid banner-img-mobile" />
+            <div class="text-white banner-text-mobile">
+                <h1 class="banner-title mb-3 fw-bold">Hệ thống luyện, thi đánh giá năng lực và ngân hàng câu hỏi</h1>
+                <p class="banner-sub-title mt-2 mb-abs-32">
+                    Cung cấp ngân hàng câu hỏi cho khối tiểu học, THCS, THPT và Luyện theo các chủ đề, tổ chức thi và nhận chứng chỉ cho các kì thi đánh giá năng lực.
+                </p>
+                <a asp-action="SignUp" asp-controller="Auth" class="fs-18 btn btn-light w-abs-min-160">Đăng ký</a>
+            </div>
+            <div class="pt-0 pt-sm-4 pt-xl-0 mb-5">
+                <div class="container-fluid container-lg flex-fill d-flex flex-column">
+                    <div class="row mx-0 flex-fill d-flex flex-column">
+                        <div class=" col-lg-10 col-xl-8 col-xxl-6 flex-fill d-flex flex-column justify-content-end justify-content-xl-between">
+                            <!-- A div empty for layout -->
+                            <div class="empty d-none d-xl-block"></div>
+
+                            <div class="fw-bold mt-4">
+                                <div class="d-flex flex-column flex-sm-row align-items-center mx-i-15">
+                                    <div class="px-abs-15 statistic-box">
+                                        <div class="box-item-home box-block box-banner">
+                                            <div class="box-inside">
+                                                <div class="bg-red-02 number-info br-radius-25">@systemCounter.members</div>
+                                                <p class="mt-4 fs-18 text-center">Học viên tham gia</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="px-abs-15 statistic-box">
+                                        <div class="box-item-home box-block box-banner">
+                                            <div class="box-inside">
+                                                <div class="bg-moss-green number-info br-radius-25">@systemCounter.contests</div>
+                                                <p class="mt-4 fs-18 text-center">Cuộc thi được tổ chức</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="px-abs-15 statistic-box">
+                                        <div class="box-item-home box-block box-banner">
+                                            <div class="box-inside">
+                                                <div class="bg-light-blue number-info br-radius-25">@systemCounter.examnitations</div>
+                                                <p class="mt-4 fs-18 text-center">Bộ đề thi</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="mt-abs-30 fs-32">Những con số biết nói</p>
+                                <p class="mt-2 fs-16 mb-3 fw-light">
+                                    Đơn vị chính thức cung cấp ngân hàng câu hỏi cho các cấp học trên toàn quốc.
+                                    Cấp chứng chỉ có giá trị trong 11 nước ASIAN, được Bộ Giáo Dục và Đào Tạo công nhận.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- End.Navigation -->
+    <!-- Body -->
+    <div class="home-page-body">
+        <div class="container-fluid container-lg">
+            <!-- Event -->
+            <div class="event text-center">
+                <h3 class="fs-32 fw-bold">Sự kiện cuộc thi</h3>
+                <p class="fs-16 mt-abs-30">
+                    Các cuộc thi thử và thi chính thức do SEAMEO CELLL tổ chức
+                </p>
+                @if (contests != null && contests.Count > 0)
+                {
+                    <ul class="event-filter-button mt-abs-30 flex-column flex-sm-row">
+                        <li class="mb-2 mb-sm-0 filter-button active" data-filter="*">Tất cả</li>
+                        <li class="mb-2 mb-sm-0 filter-button" data-filter=".exam">tham gia thi thật</li>
+                        <li class="mb-2 mb-sm-0 filter-button" data-filter=".test">tham gia Thi thử</li>
+                    </ul>
+                    <div class="row mx-i-15 text-start" id='event-grid'>
+                    </div>
+                    <button id="btn-view-all-contest" class="btn mt-abs-30 btn-view-all mx-auto">
+                        Xem tất cả
+                    </button>
+                }
+            </div>
+
+            <!-- Rating -->
+            <div class="rating text-center">
+                <h3 class="fs-32 fw-bold">Bảng xếp hạng</h3>
+                <p class="fs-16 mt-abs-30 w-abs-max-670 mx-auto">
+                    Danh sách thứ hạng và điểm cho các môn thi/ chủ đề cho các cuộc thi được tổ chức bởi
+                    SEAMEO CELLL.
+                </p>
+                <div class="rating-slider" id="rating-slider">
+                    <div class="slide">
+                        <div class="row align-items-center mx-0">
+                            <div class="w-abs-max-356 col-12 col-sm-3   px-2 px-xxl-5 mb-5 mb-xxl-0">
+                                <p class="fs-20">Đợt thi thử IELTS ngày 01/04</p>
+                                <p class="fs-16 text-purple-03 fw-bold mt-4">Vòng 1</p>
+                                <p class="fs-16 mt-2 mb-abs-32 text-center text-xxl-start w-abs-max-670 mx-auto">
+                                    Lorem
+                                    Ipsum
+                                    is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been
+                                    the
+                                    industry's standard dummy text ever since the 1500s, when an unknown printer
+                                </p>
+                                <button class="btn btn-view-all mx-auto">
+                                    Xem tất cả
+                                </button>
+                            </div>
+                            <div class="flex-shrink-1 col-12 col-sm-9  flex-grow-1 px-0">
+                                <table id="rating-table" class="rating-table table custom-table">
+                                    <thead>
+                                        <tr class="d-flex">
+                                            <th class="col-2 text-center">Hạng</th>
+                                            <th class="col-2 ps-3">Họ tên</th>
+                                            <th class="col-2 subject-col text-center">Toán</th>
+                                            <th class="col-2 subject-col text-center">Văn</th>
+                                            <th class="col-2 subject-col text-center">Ngoại ngữ</th>
+                                            <th class="col-2 text-center">Tổng điểm</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="d-flex">
+                                            <td class="col-2 text-center">#1</td>
+                                            <td class="col-2 ps-3">Nguyễn Văn A</td>
+                                            <td class="col-2 text-center">
+                                                <p class="fw-600">100/100</p>
+                                                <p class="fs-14">(00:01:30:00)</p>
+                                            </td>
+                                            <td class="col-2 text-center">#1</td>
+                                            <td class="col-2 text-center">#1</td>
+                                            <td class="col-2 text-center fw-600">#1</td>
+                                        </tr>
+                                        <tr class="d-flex">
+                                            <td class="col-2 text-center">#2</td>
+                                            <td class="col-2 ps-3">Nguyễn Văn A</td>
+                                            <td class="col-2 text-center">
+                                                <p class="fw-600">100/100</p>
+                                                <p class="fs-14">(00:01:30:00)</p>
+                                            </td>
+                                            <td class="col-2 text-center">#1</td>
+                                            <td class="col-2 text-center">#1</td>
+                                            <td class="col-2 text-center fw-600">#1</td>
+                                        </tr>
+                                        <tr class="d-flex">
+                                            <td class="col-2 text-center">#3</td>
+                                            <td class="col-2 ps-3">Nguyễn Văn A</td>
+                                            <td class="col-2 text-center">
+                                                <p class="fw-600">100/100</p>
+                                                <p class="fs-14">(00:01:30:00)</p>
+                                            </td>
+                                            <td class="col-2 text-center">#1</td>
+                                            <td class="col-2 text-center">#1</td>
+                                            <td class="col-2 text-center fw-600">#1</td>
+                                        </tr>
+                                        <tr class="d-flex">
+                                            <td class="col-2 text-center">#4</td>
+                                            <td class="col-2 ps-3">Nguyễn Văn A</td>
+                                            <td class="col-2 text-center">
+                                                <p class="fw-600">100/100</p>
+                                                <p class="fs-14">(00:01:30:00)</p>
+                                            </td>
+                                            <td class="col-2 text-center">#1</td>
+                                            <td class="col-2 text-center">#1</td>
+                                            <td class="col-2 text-center fw-600">#1</td>
+                                        </tr>
+                                        <tr class="d-flex">
+                                            <td class="col-2 text-center">#5</td>
+                                            <td class="col-2 ps-3">Nguyễn Văn A</td>
+                                            <td class="col-2 text-center">
+                                                <p class="fw-600">100/100</p>
+                                                <p class="fs-14">(00:01:30:00)</p>
+                                            </td>
+                                            <td class="col-2 text-center">#1</td>
+                                            <td class="col-2 text-center">#1</td>
+                                            <td class="col-2 text-center fw-600">#1</td>
+                                        </tr>
+                                        <tr class="d-flex">
+                                            <td class="col-2 text-center">#6</td>
+                                            <td class="col-2 ps-3">Nguyễn Văn A</td>
+                                            <td class="col-2 text-center">
+                                                <p class="fw-600">100/100</p>
+                                                <p class="fs-14">(00:01:30:00)</p>
+                                            </td>
+                                            <td class="col-2 text-center">#1</td>
+                                            <td class="col-2 text-center">#1</td>
+                                            <td class="col-2 text-center fw-600">#1</td>
+                                        </tr>
+                                        <tr class="d-flex">
+                                            <td class="col-2 text-center">#7</td>
+                                            <td class="col-2 ps-3">Nguyễn Văn A</td>
+                                            <td class="col-2 text-center">
+                                                <p class="fw-600">100/100</p>
+                                                <p class="fs-14">(00:01:30:00)</p>
+                                            </td>
+                                            <td class="col-2 text-center">#1</td>
+                                            <td class="col-2 text-center">#1</td>
+                                            <td class="col-2 text-center fw-600">#1</td>
+                                        </tr>
+                                        <tr class="d-flex">
+                                            <td class="col-2 text-center">#8</td>
+                                            <td class="col-2 ps-3">Nguyễn Văn A</td>
+                                            <td class="col-2 text-center">
+                                                <p class="fw-600">100/100</p>
+                                                <p class="fs-14">(00:01:30:00)</p>
+                                            </td>
+                                            <td class="col-2 text-center">#1</td>
+                                            <td class="col-2 text-center">#1</td>
+                                            <td class="col-2 text-center fw-600">#1</td>
+                                        </tr>
+                                        <tr class="d-flex">
+                                            <td class="col-2 text-center">#9</td>
+                                            <td class="col-2 ps-3">Nguyễn Văn A</td>
+                                            <td class="col-2 text-center">
+                                                <p class="fw-600">100/100</p>
+                                                <p class="fs-14">(00:01:30:00)</p>
+                                            </td>
+                                            <td class="col-2 text-center">#1</td>
+                                            <td class="col-2 text-center">#1</td>
+                                            <td class="col-2 text-center fw-600">#1</td>
+                                        </tr>
+                                        <tr class="d-flex">
+                                            <td class="col-2 text-center">#10</td>
+                                            <td class="col-2 ps-3">Nguyễn Văn A</td>
+                                            <td class="col-2 text-center">
+                                                <p class="fw-600">100/100</p>
+                                                <p class="fs-14">(00:01:30:00)</p>
+                                            </td>
+                                            <td class="col-2 text-center">#1</td>
+                                            <td class="col-2 text-center">#1</td>
+                                            <td class="col-2 text-center fw-600">#1</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slide">
+                        <div class="row align-items-center mx-0">
+                            <div class="w-abs-max-356 col-12 col-sm-4  px-0 px-xxl-5 mb-5 mb-xxl-0">
+                                <p class="fs-20">Đợt thi thử IELTS ngày 01/05</p>
+                                <p class="fs-16 text-purple-03 fw-bold mt-4">Vòng 2</p>
+                                <p class="fs-16 mt-2 mb-abs-32 text-center text-xxl-start w-abs-max-670 mx-auto">
+                                    Lorem
+                                    Ipsum
+                                    is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been
+                                    the
+                                    industry's standard dummy text ever since the 1500s, when an unknown printer
+                                </p>
+                                <button class="btn btn-view-all mx-auto">
+                                    Xem tất cả
+                                </button>
+                            </div>
+                            <div class="flex-shrink-1 col-12 col-sm-8  flex-grow-1 px-0">
+                                <table id="rating-table" class="rating-table table custom-table">
+                                    <thead>
+                                        <tr class="d-flex">
+                                            <th class="col-2 text-center">Hạng</th>
+                                            <th class="col-2 ps-3">Họ tên</th>
+                                            <th class="col-2 subject-col text-center">Toán</th>
+                                            <th class="col-2 subject-col text-center">Văn</th>
+                                            <th class="col-2 subject-col text-center">Ngoại ngữ</th>
+                                            <th class="col-2 text-center">Tổng điểm</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="d-flex">
+                                            <td class="col-2 text-center">#1</td>
+                                            <td class="col-2 ps-3">Nguyễn Văn A</td>
+                                            <td class="col-2 text-center">
+                                                <p class="fw-600">100/100</p>
+                                                <p class="fs-14">(00:01:30:00)</p>
+                                            </td>
+                                            <td class="col-2 text-center">#1</td>
+                                            <td class="col-2 text-center">#1</td>
+                                            <td class="col-2 text-center fw-600">#1</td>
+                                        </tr>
+                                        <tr class="d-flex">
+                                            <td class="col-2 text-center">#2</td>
+                                            <td class="col-2 ps-3">Nguyễn Văn A</td>
+                                            <td class="col-2 text-center">
+                                                <p class="fw-600">100/100</p>
+                                                <p class="fs-14">(00:01:30:00)</p>
+                                            </td>
+                                            <td class="col-2 text-center">#1</td>
+                                            <td class="col-2 text-center">#1</td>
+                                            <td class="col-2 text-center fw-600">#1</td>
+                                        </tr>
+                                        <tr class="d-flex">
+                                            <td class="col-2 text-center">#3</td>
+                                            <td class="col-2 ps-3">Nguyễn Văn A</td>
+                                            <td class="col-2 text-center">
+                                                <p class="fw-600">100/100</p>
+                                                <p class="fs-14">(00:01:30:00)</p>
+                                            </td>
+                                            <td class="col-2 text-center">#1</td>
+                                            <td class="col-2 text-center">#1</td>
+                                            <td class="col-2 text-center fw-600">#1</td>
+                                        </tr>
+                                        <tr class="d-flex">
+                                            <td class="col-2 text-center">#4</td>
+                                            <td class="col-2 ps-3">Nguyễn Văn A</td>
+                                            <td class="col-2 text-center">
+                                                <p class="fw-600">100/100</p>
+                                                <p class="fs-14">(00:01:30:00)</p>
+                                            </td>
+                                            <td class="col-2 text-center">#1</td>
+                                            <td class="col-2 text-center">#1</td>
+                                            <td class="col-2 text-center fw-600">#1</td>
+                                        </tr>
+                                        <tr class="d-flex">
+                                            <td class="col-2 text-center">#5</td>
+                                            <td class="col-2 ps-3">Nguyễn Văn A</td>
+                                            <td class="col-2 text-center">
+                                                <p class="fw-600">100/100</p>
+                                                <p class="fs-14">(00:01:30:00)</p>
+                                            </td>
+                                            <td class="col-2 text-center">#1</td>
+                                            <td class="col-2 text-center">#1</td>
+                                            <td class="col-2 text-center fw-600">#1</td>
+                                        </tr>
+                                        <tr class="d-flex">
+                                            <td class="col-2 text-center">#6</td>
+                                            <td class="col-2 ps-3">Nguyễn Văn A</td>
+                                            <td class="col-2 text-center">
+                                                <p class="fw-600">100/100</p>
+                                                <p class="fs-14">(00:01:30:00)</p>
+                                            </td>
+                                            <td class="col-2 text-center">#1</td>
+                                            <td class="col-2 text-center">#1</td>
+                                            <td class="col-2 text-center fw-600">#1</td>
+                                        </tr>
+                                        <tr class="d-flex">
+                                            <td class="col-2 text-center">#7</td>
+                                            <td class="col-2 ps-3">Nguyễn Văn A</td>
+                                            <td class="col-2 text-center">
+                                                <p class="fw-600">100/100</p>
+                                                <p class="fs-14">(00:01:30:00)</p>
+                                            </td>
+                                            <td class="col-2 text-center">#1</td>
+                                            <td class="col-2 text-center">#1</td>
+                                            <td class="col-2 text-center fw-600">#1</td>
+                                        </tr>
+                                        <tr class="d-flex">
+                                            <td class="col-2 text-center">#8</td>
+                                            <td class="col-2 ps-3">Nguyễn Văn A</td>
+                                            <td class="col-2 text-center">
+                                                <p class="fw-600">100/100</p>
+                                                <p class="fs-14">(00:01:30:00)</p>
+                                            </td>
+                                            <td class="col-2 text-center">#1</td>
+                                            <td class="col-2 text-center">#1</td>
+                                            <td class="col-2 text-center fw-600">#1</td>
+                                        </tr>
+                                        <tr class="d-flex">
+                                            <td class="col-2 text-center">#9</td>
+                                            <td class="col-2 ps-3">Nguyễn Văn A</td>
+                                            <td class="col-2 text-center">
+                                                <p class="fw-600">100/100</p>
+                                                <p class="fs-14">(00:01:30:00)</p>
+                                            </td>
+                                            <td class="col-2 text-center">#1</td>
+                                            <td class="col-2 text-center">#1</td>
+                                            <td class="col-2 text-center fw-600">#1</td>
+                                        </tr>
+                                        <tr class="d-flex">
+                                            <td class="col-2 text-center">#10</td>
+                                            <td class="col-2 ps-3">Nguyễn Văn A</td>
+                                            <td class="col-2 text-center">
+                                                <p class="fw-600">100/100</p>
+                                                <p class="fs-14">(00:01:30:00)</p>
+                                            </td>
+                                            <td class="col-2 text-center">#1</td>
+                                            <td class="col-2 text-center">#1</td>
+                                            <td class="col-2 text-center fw-600">#1</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- News -->
+            <div class="text-center">
+                <h3 class="fs-32 fw-bold">Tin tức</h3>
+                <p class="fs-16 mt-abs-30">
+                    Cập nhật các tin tức về giáo dục, đào tạo
+                </p>
+                @if (news != null && news.Count > 0)
+                {
+                    <div class="row mx-i-15">
+                        @foreach (var item in news)
+                        {
+                            <div class="col-sm-6 col-xl-3 px-i-15 mt-abs-30 d-flex flex-column">
+                                <div class="box-item-home box-news flex-grow-1 flex-shrink-1 d-flex flex-column">
+                                    <div class="box-block">
+                                        <div class="box-inside">
+                                            <img src="~/images/new-1.png" alt="@item.slug" class="img-fluid" />
+                                        </div>
+                                    </div>
+                                    <div class="mt-abs-30 mb-abs-32 px-abs-15 fs-16 flex-grow-1 flex-shrink-1 d-flex flex-column">
+                                        <p class="text-uppercase">@item.title</p>
+                                        <p class="mt-abs-15 fw-600 fs-18">
+                                            @item.description
+                                        </p>
+                                        <p class="mt-abs-15">@item.created.ToString("dd/mm/yyyy")</p>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                }
+            </div>
+
+            <!-- Documents -->
+            <div class="document text-center">
+                <h3 class="fs-32 fw-bold">Tài liệu tham khảo</h3>
+                @if (libs != null && libs.Count > 0)
+                {
+                    var countLib = 0;
+                    <div class="p-3">
+                        <ul class="document-filter-button mt-abs-30 rating-slider" id="document-filter">
+                            @foreach (var item in libs)
+                            {
+                                if (countLib == 0)
+                                {
+                                    <li class="slide filter-button active" data-filter=".@item.name.Replace(" ","")">@item.name</li>
+                                }
+                                else
+                                {
+                                    <li class="slide filter-button" data-filter=".@item.name.Replace(" ","")">@item.name</li>
+                                }
+                                countLib++;
+                            }
+                        </ul>
+                    </div>
+                    <div class="row mx-i-15 text-start" id='document-grid'>
+                        @if (firstLibs != null)
+                        {
+                            <input class="d-none" id="first-libs" value="@firstLibs.name.Replace(" ","")" />
+                        }
+
+                        @foreach (var item in libs)
+                        {
+                            foreach (var lib in item.libraries)
+                            {
+                                <div class="col-12 col-lg-6 px-15 mt-abs-30 document-item @item.name.Replace(" ","")">
+                                    <div class="box-item-home">
+                                        <div class="document-file-icon">
+                                            <img src="~/images/icon-pdf-file.png" alt="icon-pdf-file" />
+                                        </div>
+                                        <div class="document-file-detail fs-18 w-100">
+                                            <p class="fw-600  document-file-title">
+                                                @lib.name
+                                            </p>
+                                            <div class="d-flex align-items-center justify-content-between mt-abs-20">
+                                                <p>@lib.created.ToString("dd/mm/yyyy")</p>
+                                                <p>@lib.size MB</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        }
+                    </div>
+                    <button class=" btn mt-abs-30 btn-view-all mx-auto">
+                        Xem tất cả
+                    </button>
+                }
+            </div>
+        </div>
+    </div>
+
+    <!-- End.Body -->
+    <!-- Footer -->
+    <partial name="_Footer" />
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="adsModal" tabindex="-1" aria-labelledby="adsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <img class="ads-image w-100" src="./images/sign-in.png" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- End.Footer -->
+    <!-- ************************* Javascript Files ************************* -->
+    <!-- Bootstrap core JavaScript -->
+    <script src="~/lib/jquery/jquery.min.js "></script>
+    <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="~/lib/simplebar/simplebar.min.js"></script>
+    <script src="~/lib/toastr.js/toastr.min.js"></script>
+    <script src="~/lib/isotope/isotope.pkgd.min.js"></script>
+    <script src="~/lib/slick/slick.js"></script>
+    <script src="~/lib/moment.js/moment-with-locales.min.js"></script>
+    <script src="~/lib/sweetalerts/sweetalert2.min.js"></script>
+
+    <!-- Custom scripts for this template -->
+    <script src="~/js/shared/constants.js" asp-append-version="true"></script>
+    <script src="~/js/shared/text.js" asp-append-version="true"></script>
+    <script src="~/js/shared/utils.js" asp-append-version="true"></script>
+    <script src="~/js/shared/ajaxService.js" asp-append-version="true"></script>
+    <script src="~/js/shared/sweetAlertService.js" asp-append-version="true"></script>
+    <script asp-append-version="true">
+        var contestArray = @Json.Serialize(contests)
+    </script>
+    <script type="text/javascript " src="~/js/main.js" asp-append-version="true"></script>
+    <script type="text/javascript " src="~/js/home.js" asp-append-version="true"></script>
+
+    <partial name="_Notification" />
+
+</body>
+
+</html>

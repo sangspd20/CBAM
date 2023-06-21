@@ -1,0 +1,248 @@
+/* CSS form control */
+.form-control {
+    display: block;
+    width: 100%;
+    padding: 0.4375rem 0.875rem;
+    font-size: 0.9375rem;
+    font-weight: 400;
+    line-height: 1.53;
+    color: #697a8d;
+    background-color: var(--bs-white);
+    background-clip: padding-box;
+    border: 1px solid #d9dee3;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border-radius: 0.375rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.form-select:focus,
+.form-control:focus {
+    color: #697a8d;
+    background-color: var(--bs-white);
+    border-color: rgba(249,249,255,.54);
+    outline: 0;
+    box-shadow: 0 0 0.25rem 0.05rem rgb(105 108 255 / 10%);
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: var(--bs-primary);
+}
+
+.form-control::-moz-placeholder {
+    color: #b4bdc6;
+    opacity: 1;
+    font-size: 14px;
+}
+
+.form-control::placeholder {
+    color: #b4bdc6;
+    opacity: 1;
+    font-size: 14px;
+}
+
+.input-group-text {
+    display: flex;
+    align-items: center;
+    padding: 0.4375rem 0.875rem;
+    font-size: 0.9375rem;
+    font-weight: 400;
+    line-height: 1.53;
+    color: #697a8d;
+    text-align: center;
+    white-space: nowrap;
+    background-color: var(--bs-white);
+    border: 1px solid #d9dee3;
+    border-radius: 0.375rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.input-group:focus-within .form-control, 
+.input-group:focus-within .input-group-text {
+    border-color: var(--bs-primary);
+}
+
+.input-group:focus-within .form-control, 
+.input-group:focus-within .input-group-text {
+    box-shadow: none;
+}
+
+/* CSS checkbox */
+.form-check-input {
+    width: 1.2em;
+    height: 1.2em;
+    margin-top: 0.165em;
+    vertical-align: top;
+    background-color: var(--bs-white);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    border: 1px solid #d9dee3;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+.form-check {
+    min-height: 1.434375rem;
+    padding-left: 1.7em;
+    margin-bottom: 0.125rem;
+}
+
+.form-check .form-check-input {
+    float: left;
+    margin-left: -1.7em
+}
+
+.form-check-input:checked {
+    background-color: rgba(105,108,255,.08);
+    border-color: rgba(105,108,255,.08)
+}
+.form-check-input:checked[type=radio],
+.form-check-input:checked[type=checkbox] {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M6 10l3 3l6-6'/%3e%3c/svg%3e")
+}
+
+.form-check-input:checked, 
+.form-check-input[type=checkbox]:indeterminate {
+    background-color: var(--bs-primary);
+    border-color: var(--bs-primary);
+    box-shadow: 0 2px 4px 0 rgb(105 108 255 / 40%);
+}
+.form-check-input[type=radio] {
+    border-radius: 1.25rem;
+}
+.form-check-input[type=checkbox] {
+    border-radius: 0.25em;
+}
+
+.form-check-input[type=checkbox]:indeterminate {
+    background-color: rgba(105,108,255,.08);
+    border-color: rgba(105,108,255,.08);
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M6 10h8'/%3e%3c/svg%3e")
+}
+
+/* custom CSS for password field */
+html:not([dir=rtl]) .input-group-merge .form-control:not(:last-child) {
+    padding-right: 0;
+    border-right: 0;
+}
+
+.input-group.has-validation > .form-control:first-child {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.input-group > :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
+    margin-left: -1px;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+html:not([dir=rtl]) .input-group-merge .input-group-text:last-child {
+    border-left: 0;
+}
+
+/* form select */
+.form-select {    
+    padding: 0.4375rem 0.875rem;
+    background-color: var(--bs-white);
+    background-clip: padding-box;
+    border: 1px solid #d9dee3;
+    border-radius: 0.375rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    font-weight: 400;
+    line-height: 1.63;
+    font-size: 14px;
+    color: #697a8d;
+}
+
+.form-select:invalid {
+    color: #B4BDC6;
+}
+
+.form-select:invalid option {
+    color: #697a8d;
+}
+
+
+/* Button */
+.btn-primary {
+    color: var(--bs-white);
+    background-color: var(--bs-primary);
+    border-color: var(--bs-primary);
+    box-shadow: 0 0.125rem 0.25rem 0 rgb(105 108 255 / 40%);
+}
+
+.btn-primary:hover {
+    color: var(--bs-white) !important;
+    background-color: #5f61e6 !important;
+    border-color: #5f61e6 !important;
+    transform: translateY(-1px) !important;
+}
+
+.btn-primary-2 {
+    background: #E7E7FF;
+    border-color: #E7E7FF;
+    color: #696CFF;
+}
+
+.btn-primary-2:hover {
+    transform: translateY(-1px) !important;
+    background-color: #b3b3ff !important;
+    border-color: #b3b3ff !important;
+    color: #696CFF !important
+}
+
+.btn-secondary {
+    background-color: #EBEEF0;
+    border-color: #EBEEF0;;
+    color: #8592A3;
+}
+
+.btn-secondary:hover {
+    transform: translateY(-1px) !important;
+}
+
+.btn-delete {
+    color: #FF3E1D;
+    background-color: #FFC5BB;
+    border-color: #FFC5BB;
+}
+
+.btn-delete:hover {
+    transform: translateY(-1px) !important;
+    color: #ff5233;
+    background-color: #ffa899;
+    border-color: #ffa899;
+}
+
+.btn-light {
+    background-color: #FFFFFF;
+    border-radius: 10px;
+    color: #000;
+}
+
+    .btn-light:hover {
+        background-color: #EAEAEA;
+        border-color: #EAEAEA;
+    }
+
+.btn-success {
+    background: #71DD37;
+    box-shadow: 0px 2px 4px rgba(113, 221, 55, 0.4);
+    border-color: #71DD37;
+    color: #fff;
+}
+
+.btn-success:hover {
+    background-color: #5ac421 ;
+    border-color: #5ac421 ;
+    transform: translateY(-1px) !important;
+}
+
+.btn-danger {
+    background: #FF3E1D;
+    box-shadow: 0px 2px 4px rgba(255, 62, 29, 0.4);    
+}

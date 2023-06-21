@@ -1,0 +1,92 @@
+﻿@model List<CBAMONLINE.Models.Exam.Exam.Result.ExamResultResponse>
+@{
+    ViewData["Title"] = "Kết quả thi";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var result = Model;
+    var totalOntime = 0;
+    var totalTime = 0;
+    decimal totalMark = 0;
+    var sumTotalMark = 0;
+    if (result != null && result.Count > 0)
+    {
+        totalOntime = result.Sum(r => r.onTime);
+        totalTime = result.Sum(r => r.time);
+        totalMark = result.Sum(r => r.mark);
+        sumTotalMark = result.Sum(r => r.totalMark);
+    }
+}
+
+<div class="bg-white box-shadow-2 br-radius-4 p-4 my-abs-40">
+    <div class="text-center mb-4">
+        <p class="text-purple-01 fs-34">Xin chúc mừng! 🚀</p>
+        <div class="mt-3 d-flex align-items-center justify-content-center">
+            <i class="fa fa-clock-o me-2" aria-hidden="true"></i>
+            Thời gian hoàn thành <span class="text-green px-1">@totalOntime phút</span> trên <span class="text-purple-01 px-1">@totalTime phút</span>
+        </div>
+    </div>
+    <p class="br-bottom-gray-02 fs-20 text-gray-04">Phần trắc nghiệm</p>
+    <div class="py-4 d-flex">
+        <div class="final-detail w-min-0 flex-shrink-1 flex-grow-1">
+            <div class="row">
+               
+               @if (result != null && result.Count > 0)
+                {
+                    foreach (var item in result)
+                    {
+                        var percent = (item.mark / item.totalMark) * 100;
+
+                        <div class="col-12 col-xl-6 px-4 mt-5">
+                            <div class="final-detail-group">
+                                <div class="subject-type">@item.name</div>
+                                <div class="subject-score">@item.mark/@item.totalMark</div>
+                            </div>
+                            <div class="progress-detail">
+                                <div class="progress">
+                                    <div class="progress-bar" role="progressbar" style="width: @percent%;"
+                                         aria-valuemin="0" aria-valuemax="@item.totalMark">
+                                    </div>
+                                </div>
+                                <span class="progress-value" style="left:@percent%">@item.mark</span>
+                                <div class="progress-range">
+                                    <span class="range-min">0</span>
+                                    <span class="range-max">@item.totalMark</span>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+
+            </div>
+        </div>
+        <div class="final-score">
+            <p class="fs-28 mb-3">Tổng Điểm</p>
+            <div class="progress mx-auto" data-value='@totalMark'>
+                <span class="progress-left">
+                    <span class="progress-bar"></span>
+                </span>
+                <span class="progress-right">
+                    <span class="progress-bar"></span>
+                </span>
+                <div class="progress-value w-100 h-100 rounded-circle d-flex align-items-center justify-content-center">
+                    <div class="fs-52 fw-bold">
+                        @totalMark<p class="fs-24">/@sumTotalMark</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <p class="br-bottom-gray-02 fs-20 text-gray-04">Phần tự luận</p>
+    <p class="text-gray-05 mt-2">Đáp án sẽ được trả lời sau.</p>
+    <div class="d-flex align-items-center justify-content-center mt-4">
+        <a asp-action="Index" asp-controller="Home" class="btn btn-primary-2 mx-1 w-abs-min-160">Về trang chủ</a>
+        <a asp-action="ScoreBoard" asp-controller="Contest" class="btn btn-primary mx-1 w-abs-min-160">Xem bảng điểm</a>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        var result = @Json.Serialize(result);
+    </script>
+    <script src="~/js/examResult.js" asp-append-version="true"></script>
+
+}

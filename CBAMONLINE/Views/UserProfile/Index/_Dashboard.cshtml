@@ -1,0 +1,68 @@
+﻿@model CBAMONLINE.Models.UserProfile.UserProfile;
+@{
+    var name = Model.lastName + " " + Model.firstName;
+    var status = Model.status == 1 ? "Hoạt động" : "Khóa";
+}
+<div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+    <div class="row align-items-start mx-0">
+        <div class="w-abs-max-336 col-12 col-lg-4 mb-4 mb-lg-0 px-0 pe-lg-4">
+            <div class="p-4 box-shadow-2 br-radius-8 bg-white">
+                <h4 class="fs-20 text-grey">Thông tin</h4>
+                <div class="d-flex align-items-center text-gray-04 fs-15 mt-4">
+                    <i class='bx bx-user me-2 mt-i-2'></i>
+                    Họ tên:
+                    <span class="text-gray-01 ms-2">@name</span>
+                </div>
+                <div class="d-flex align-items-center text-gray-04 fs-15 mt-4">
+                    <i class='bx bx-check me-2 mt-i-2'></i>
+                    Trạng thái:
+                    <span class="text-green ms-2">@status</span>
+                </div>
+                <div class="d-flex align-items-center text-gray-04 fs-15 mt-4">
+                    <i class='bx bx-star me-2 mt-i-2'></i>
+                    Nhóm:
+                    <span class="text-gray-01 ms-2">Thành viên</span>
+                </div>
+                <h4 class="fs-20 text-grey mt-4 pt-3">Liên hệ</h4>
+                <div class="d-flex align-items-center text-gray-04 fs-15 mt-4">
+                    <i class='bx bx-phone me-2 mt-i-2'></i>
+                    Số điện thoại:
+                    <span class="text-gray-01 ms-2">@Model.phone</span>
+                </div>
+                <div class="d-flex align-items-center text-gray-04 fs-15 mt-4">
+                    <i class='bx bx-envelope me-2 mt-i-2'></i>
+                    Email:
+                    <span class="text-gray-01 ms-2">@Model.email</span>
+                </div>
+            </div>
+        </div>
+        <div class="flex-shrink-1 col-12 col-lg-8 flex-grow-1 p-4 box-shadow-2 br-radius-8 bg-white">
+            <p class="fs-20 text-gray-04 mb-4">Cuộc thi bạn đã tham gia gần đây</p>
+            <div class="container-fluid px-0">
+                <table id="subject" class="table custom-table">
+                    <thead>
+                        <tr class="d-flex">
+                            <th class="col-5 col-lg-7 col-xl-9">Môn thi</th>
+                            <th class="col-3 col-lg-2 col-xl-1 text-center">Hạng</th>
+                            <th class="col-4 col-lg-3 col-xl-2 text-end">Ngày thi</th>
+                        </tr>
+                    </thead>
+                    <tbody id="recent-exam-body">
+                      @*  <tr class="d-flex">
+                            <td class="col-5 col-lg-7 col-xl-9">Làm bài thi môn GDCD</td>
+                            <td class="col-3 col-lg-2 col-xl-1 text-center text-purple-01">#1</td>
+                            <td class="col-4 col-lg-3 col-xl-2 text-end">6/4/2023</td>
+                        </tr>*@
+
+                    </tbody>
+                </table>
+            </div>
+            @*  <div class="mt-1 text-end">
+            <button class="btn btn-primary btn-sm">
+            Xem thêm
+            </button>
+            </div>*@
+
+        </div>
+    </div>
+</div>

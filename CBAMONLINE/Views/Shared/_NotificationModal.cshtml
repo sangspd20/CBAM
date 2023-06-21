@@ -1,0 +1,30 @@
+﻿<script src="~/lib/sweetalerts/sweetalert2.min.js"></script>
+@if (TempData["modalSuccess"] != null)
+{
+    <script type="text/javascript">
+        Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: '@TempData["modalSuccess"]',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true
+        })
+    </script>
+}
+@if (TempData["modalError"] != null)
+{
+    <script type="text/javascript">
+        Swal.fire({
+            position: 'top-end',
+            icon: 'error',
+            title: '@TempData["modalError"]',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true
+        })
+    </script>
+}
+
+
+

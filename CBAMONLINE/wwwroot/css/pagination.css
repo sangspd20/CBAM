@@ -1,0 +1,58 @@
+.pagination .first,
+.pagination .last
+{
+    display: none;
+}
+
+/* Pagination */
+.pagination {
+    margin: 32px 0 30px 0;
+}
+
+    .pagination .page-item .page-link {
+        margin: 0 6px;
+        border: 1px solid #E7E7FF;
+        border-radius: 5px;
+        width: 36px;
+        height: 36px;
+        color: #696CFF;
+        background-color: #E7E7FF;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+    }
+
+    .pagination .page-item.page-next .page-link,
+    .pagination .page-item.page-previous .page-link {
+        font-size: 0;
+        line-height: 30px;
+    }
+
+        .pagination .page-item.page-next .page-link:before,
+        .pagination .page-item.page-previous .page-link::before {
+            font: normal normal normal 14px/1 FontAwesome;
+        }
+
+        .pagination .page-item.page-previous .page-link::before {
+            content: "\f177";
+        }
+
+        .pagination .page-item.page-next .page-link:before {
+            content: "\f178";
+        }
+
+    .pagination .page-item:hover .page-link,
+    .pagination .page-item.active .page-link {
+        background-color: #696CFF;
+        border-color: #696CFF;
+        color: #fff;
+    }
+
+    .pagination .page-item.disabled .page-link {
+        color: #8592A3;
+        background: #EBEEF0;
+        border-color: #EBEEF0;
+    }
+
+
+

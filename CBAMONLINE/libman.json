@@ -1,0 +1,27 @@
+{
+  "version": "1.0",
+  "defaultProvider": "cdnjs",
+  "libraries": [
+    {
+      "library": "toastr.js@2.1.4",
+      "destination": "wwwroot/lib/toastr.js/"
+    },
+    {
+      "library": "moment.js@2.29.4",
+      "destination": "wwwroot/lib/moment.js/"
+    },
+    {
+      "library": "bootstrap-datepicker@1.9.0",
+      "destination": "wwwroot/lib/bootstrap-datepicker/"
+    },
+    {
+      "library": "webcamjs@1.0.26",
+      "destination": "wwwroot/lib/webcamjs/"
+    },
+    {
+      "provider": "cdnjs",
+      "library": "html2canvas@1.4.1",
+      "destination": "wwwroot/lib/html2canvas/"
+    }
+  ]
+}

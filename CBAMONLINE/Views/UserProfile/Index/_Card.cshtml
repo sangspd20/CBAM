@@ -1,0 +1,54 @@
+﻿<div class="tab-pane fade" id="card" role="tabpanel" aria-labelledby="card-tab">
+    <div class="p-4 box-shadow-2 br-radius-8 bg-white mb-4 fs-18">
+        <p class="fs-20 text-gray-04">Nạp thẻ thông qua ngân hàng</p>
+        <p class="my-4 text-purple-01">Thanh toán thẻ tín dụng/ATM.</p>
+        <ul class="list-style-dot">
+            <li>10.000đ là định mức nạp cho mỗi lần.</li>
+            <li class="mt-3">
+                Số tiền sau khi nạp sẽ được chuyển vào số dư tài khoản của bạn (kiểm tra cột bên
+                phải). Bạn có thể <a href="#" class="link-secondary text-gray-03">click vào đây</a> chọn tab "quy đổi"
+                để thực hiện quy đổi.
+            </li>
+        </ul>
+        <p class="mt-3">
+            <span class="text-red">Lưu ý</span>, bạn có thể sẽ mất phí dịch vụ khi chuyển khoản ,
+            mức phí sẽ tùy thuộc vào quy định của từng ngân hàng.
+        </p>
+    </div>
+    <div class="p-4 box-shadow-2 br-radius-8 bg-white mb-4">
+        <p class="fs-18">Thanh toán thẻ tín dụng/ATM.</p>
+        <form id="cardForm" onsubmit="return false;" autocomplete="off">
+            <div class="row">
+                <div class="col-sm-6 mb-4 form-group-item">
+                    <label class="form-label" for="cardLastName">Họ  <partial name="_RequiredField" /></label>
+                    <input required type="text" autocomplete="off" class="form-control" placeholder="Nhập họ" tabindex="1" id="cardLastName" name="cardLastName"
+                           value="">
+                </div>
+                <div class="col-sm-6 mb-4 form-group-item">
+                    <label class="form-label" for="cardFirstName">Tên  <partial name="_RequiredField" /></label>
+                    <input required type="text" class="form-control" autocomplete="off" placeholder="Nhập tên" tabindex="2" id="cardFirstName"
+                           name="cardFirstName" value="">
+                </div>
+                <div class="col-sm-6 mb-4 form-group-item">
+                    <label for="cardEmail" class="form-label">Địa chỉ email  <partial name="_RequiredField" /></label>
+                    <input required type="email" autocomplete="off" class="form-control" placeholder="Nhập email" tabindex="3"
+                           id="cardEmail" name="cardEmail" value="">
+                </div>
+                <div class="col-sm-6 form-group-item">
+                    <label for="cardPhone" class="form-label ">Số điện thoại  <partial name="_RequiredField" /></label>
+                    <input required type="text" maxlength="10" autocomplete="off" placeholder="Nhập số điện thoại" class="form-control field-number"
+                           tabindex="4" id="cardPhone" name="cardPhone" value="">
+                </div>
+                <div class="col-sm-6 form-group-item">
+                    <label for="cardAmount" class="form-label">Số tiền muốn nạp  <partial name="_RequiredField" /></label>
+                    <input min="10000" required type="number" autocomplete="off" placeholder="Nhập số tiền" class="form-control" tabindex="5"
+                           id="cardAmount" name="cardAmount" value="">
+                </div>
+
+            </div>
+            <button onclick="createPayment()" class="btn btn-primary btn-sm mt-4">
+                Nạp thẻ
+            </button>
+        </form>
+    </div>
+</div>

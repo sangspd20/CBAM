@@ -1,0 +1,290 @@
+﻿@using CBAMONLINE.Infrastructure.Constants;
+@using CBAMONLINE.Models.Auth.Login;
+@using CBAMONLINE.Models.UserProfile;
+@using CookieManager;
+@inject ICookieManager _cookieManager
+
+@{
+    MyCookie<LoginResponse> authCookieObj = _cookieManager.Get<MyCookie<LoginResponse>>(CookieConstants.AUTH_COOKIE);
+
+    MyCookie<UserProfile> userCookieObj = _cookieManager.Get<MyCookie<UserProfile>>(CookieConstants.USER_COOKIE);
+
+    string name = "";
+    string avatar = "";
+    UserProfile user = new UserProfile();
+    if (userCookieObj != null)
+    {
+        user = userCookieObj.Value;
+        avatar = string.IsNullOrEmpty(user.avatar) ? "/images/user-img.png" : user.avatar;
+        name = user.lastName + " " + user.firstName;
+    }
+
+}
+
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg bg-white header fixed-top">
+    <div class="container-fluid container-lg">
+        <a class="navbar-brand me-auto" asp-action="Index" asp-controller="Home">
+            <img alt="logo" src="~/images/logo.png" />
+            <span class="brand-text d-flex align-items-center ms-2 brand-name">
+               SEAMEO CELLL
+            </span>
+        </a>
+        <button class="navbar-toggler order-last" type="button" data-bs-toggle="collapse"
+                data-bs-target="#collapsibleNavbar">
+            <i class="fa fa-bars" aria-hidden="true"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="collapsibleNavbar">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">
+                        <i class="bx bx-home-smile"></i>
+                        Trang chủ
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <i class="bx bx-news"></i>
+                        Tin tức
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <i class="bx bx-library"></i>
+                        Thư viện
+                    </a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                        <i class="bx bx-book-reader"></i> Cuộc thi
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="#">Thi thử</a></li>
+                        <li><a class="dropdown-item" href="#">Thi chính thức</a></li>
+                    </ul>
+                </li>
+                <!-- Ngân hàng câu hỏi - Mega menu for desktop -->
+                <li class="d-none d-lg-block nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                        <i class='bx bxs-bank'></i> Ngân hàng câu hỏi
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-end dropdown-menu-column">
+                        <div class="row mx-0">
+                            <div class="col-4">
+                                <a class="dropdown-item d-flex align-items-center br-radius-4" href="#">
+                                    <img src="~/images/icon-math.png" alt='icon-math'>
+                                    <div class="ml-abs-12">
+                                        <p class="fs-16 text-purple-01">Toán</p>
+                                        <p class="fs-12 mt-abs-6">Phương trình và định lý</p>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-4">
+                                <a class="dropdown-item d-flex align-items-center br-radius-4" href="#">
+                                    <img src="~/images/icon-physics.png" alt='icon-physics'>
+                                    <div class="ml-abs-12">
+                                        <p class="fs-16 text-purple-01">Tổ Hợp KHTN</p>
+                                        <p class="fs-12 mt-abs-6">Vật Lý, Hóa Học, Sinh Học</p>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-4">
+                                <a class="dropdown-item d-flex align-items-center br-radius-4" href="#">
+                                    <img src="~/images/icon-history.png" alt='icon-history'>
+                                    <div class="ml-abs-12">
+                                        <p class="fs-16 text-purple-01">Lịch Sử</p>
+                                        <p class="fs-12 mt-abs-6">Các vị tướng các triều đại</p>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-4">
+                                <a class="dropdown-item d-flex align-items-center br-radius-4" href="#">
+                                    <img src="~/images/icon-education.png" alt='icon-education'>
+                                    <div class="ml-abs-12">
+                                        <p class="fs-16 text-purple-01">GDCD</p>
+                                        <p class="fs-12 mt-abs-6">Tư tưởng, đạo đức, lối sống</p>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-4">
+                                <a class="dropdown-item d-flex align-items-center br-radius-4" href="#">
+                                    <img src="~/images/icon-science.png" alt='icon-science'>
+                                    <div class="ml-abs-12">
+                                        <p class="fs-16 text-purple-01">Vật Lý</p>
+                                        <p class="fs-12 mt-abs-6">Các sự vật hiện tượng</p>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-4">
+                                <a class="dropdown-item d-flex align-items-center br-radius-4" href="#">
+                                    <img src="~/images/icon-geography.png" alt='icon-geography'>
+                                    <div class="ml-abs-12">
+                                        <p class="fs-16 text-purple-01">Địa Lý</p>
+                                        <p class="fs-12 mt-abs-6">Địa danh và khu vực</p>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-4">
+                                <a class="dropdown-item d-flex align-items-center br-radius-4" href="#">
+                                    <img src="~/images/icon-english.png" alt='icon-english'>
+                                    <div class="ml-abs-12">
+                                        <p class="fs-16 text-purple-01">Tiếng Anh</p>
+                                        <p class="fs-12 mt-abs-6">Ngôn ngữ quốc tế</p>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-4">
+                                <a class="dropdown-item d-flex align-items-center br-radius-4" href="#">
+                                    <img src="~/images/icon-chemistry.png" alt='icon-chemistry'>
+                                    <div class="ml-abs-12">
+                                        <p class="fs-16 text-purple-01">Hóa Học</p>
+                                        <p class="fs-12 mt-abs-6">Vật Lý, Hóa Học, Sinh Học</p>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-4">
+                                <a class="dropdown-item d-flex align-items-center br-radius-4" href="#">
+                                    <img src="~/images/icon-society.png" alt='icon-society'>
+                                    <div class="ml-abs-12">
+                                        <p class="fs-16 text-purple-01">Tổ Hợp KHXH</p>
+                                        <p class="fs-12 mt-abs-6">Lịch Sử, Địa Lý, GDCD</p>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-4">
+                                <a class="dropdown-item d-flex align-items-center br-radius-4" href="#">
+                                    <img src="~/images/icon-biology.png" alt='icon-biology'>
+                                    <div class="ml-abs-12">
+                                        <p class="fs-16 text-purple-01">Sinh Học</p>
+                                        <p class="fs-12 mt-abs-6">Tế bào và DNA</p>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+
+                    </div>
+                </li>
+
+                <!-- Ngân hàng câu hỏi - Dropdown menu for tablet -->
+                <li class="d-block d-lg-none nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                        <i class='bx bxs-bank'></i> Ngân hàng câu hỏi
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="#">Toán</a></li>
+                        <li><a class="dropdown-item" href="#">Tổ Hợp KHTN</a></li>
+                        <li><a class="dropdown-item" href="#">Lịch Sử</a></li>
+                        <li><a class="dropdown-item" href="#">GDCD</a></li>
+                        <li><a class="dropdown-item" href="#">Vật Lý</a></li>
+                        <li><a class="dropdown-item" href="#">Địa Lý</a></li>
+                        <li><a class="dropdown-item" href="#">Tiếng Anh</a></li>
+                        <li><a class="dropdown-item" href="#">Hóa Học</a></li>
+                        <li><a class="dropdown-item" href="#">Tổ Hợp KHXH</a></li>
+                        <li><a class="dropdown-item" href="#">Sinh Học</a></li>
+                    </ul>
+                </li>
+            </ul>
+
+            <!-- Button if use no login -->
+            @if (authCookieObj == null)
+            {
+                <div class="ms-sm-2 mt-3 ms-xxl-5 text-center auth-btn-collapse">
+                    <a asp-action="Login" asp-controller="Auth" class="btn btn-light">Đăng nhập</a>
+                    <a asp-action="SignUp" asp-controller="Auth" class="btn btn-light ms-2">Đăng kí</a>
+                </div>
+            }
+        </div>
+
+        @if (authCookieObj != null)
+        {
+            <!-- Notification -->
+            <div class="user-noti dropdown">
+                <div class="noti-icon dropdown-toggle bg-hover-grey" role="button" data-bs-toggle="dropdown">
+                    <i class='bx bx-bell'></i>
+                    <span class="number-noti d-none"></span>
+                </div>
+                <div class="dropdown-menu dropdown-menu-end noti-dropdown">
+                    <div id='noti-content' class="noti-content">
+                        <div class="p-abs-20 bg-purple-01 text-white fs-16">Thông báo</div>
+                        <div class="noti-content-wrapper">
+                            @*  <div class="d-flex align-items-start bg-noti-unread p-abs-10 br-bottom-gray-02">
+                        <img src="~/images/icon-noti-item.png" alt="icon-noti-item" />
+                        <div class="ms-2 me-2 fs-16 flex-fill">
+                        <p class="text-gray-04">Thông báo kết quả quả xếp hạng kỳ thi thử tháng 3</p>
+                        <p class="text-gray-05 mt-2">01/02/2023</p>
+                        </div>
+                        <button type="button" class="btn-close btn-sm fs-12" aria-label="Close"></button>
+                        </div>*@
+
+                        </div>
+                    </div>
+                    <div class="br-top-gray-02">
+                        <button onclick="viewAllNoti()" type="button" class="btn btn-light w-100 py-2 text-gray-01 br-0">
+                            Xem
+                            tất cả
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- User Info -->
+            <div class="user-info dropdown ml-abs-30">
+                <div class="user-img avatar size-46 user-online dropdown-toggle" role="button" data-bs-toggle="dropdown">
+                    <img src="@avatar" alt="avatar" />
+                </div>
+                <div class="dropdown-menu dropdown-menu-end">
+                    <div class="px-abs-20 py-3 d-flex align-items-center br-bottom-gray-02">
+                        <div class="user-img avatar size-37">
+                            <img src="@avatar" alt="avatar" />
+                        </div>
+                        <p class="fs-16 ms-2 text-truncate" title="@name">@name</p>
+                    </div>
+                    <ul class="br-bottom-gray-02">
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center px-abs-20 py-3 bg-hover-grey" asp-action="Index" asp-controller="UserProfile">
+                                <i class='bx bx-user me-2 mt-i-2'></i>Tài khoản
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center px-abs-20 py-3 bg-hover-grey border-top-0" asp-action="Index" asp-controller="UserProfile">
+                                <i class='bx bx-spreadsheet me-2 mt-i-2'></i>Lịch sử thi
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center px-abs-20 py-3 bg-hover-grey border-top-0" asp-action="Index" asp-controller="UserProfile">
+                                <i class='bx bx-history me-2 mt-i-2'></i>Lịch sử giao dịch
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center px-abs-20 py-3 bg-hover-grey border-top-0" asp-action="Index" asp-controller="UserProfile">
+                                <i class='bx bx-credit-card me-2 mt-i-2'></i>Nạp thẻ
+                            </a>
+                        </li>
+                    </ul>
+                    <ul>
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center px-abs-20 py-3 bg-hover-grey" href="#">
+                                <i class="fa fa-power-off me-2 mt-i-2" aria-hidden="true"></i>Ngôn ngữ
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center px-abs-20 py-3 bg-hover-grey border-top-0" asp-action="Logout" asp-controller="Auth">
+                                <i class="fa fa-globe me-2 mt-i-3" aria-hidden="true"></i>Đăng xuất
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        }
+
+        <!-- Button if use no login -->
+        @if (authCookieObj == null)
+        {
+            <div class="ms-sm-2 ms-xxl-5 auth-btn">
+                <a asp-action="Login" asp-controller="Auth" class="btn btn-light">Đăng nhập</a>
+                <a asp-action="SignUp" asp-controller="Auth" class="btn btn-light ms-2">Đăng kí</a>
+            </div>
+        }
+    </div>
+</nav>
+<!-- End.Navigation -->

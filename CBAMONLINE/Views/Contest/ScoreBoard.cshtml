@@ -1,0 +1,48 @@
+﻿@{
+    ViewData["Title"] = "Bảng điểm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var scoreBoardPaginationId = "score-board-pagination";
+    var skeletonScoreBoardId = new MultiSkeleton();
+    skeletonScoreBoardId.id = "score-board-skeleton";
+    skeletonScoreBoardId.number = 3;
+    var breadcrum = "Bảng điểm";
+}
+
+<div>
+    <partial name="_Breadcrum" model="@breadcrum" />
+
+    <!-- Layout -->
+    <div class="scoreboard">
+        <h4 class="fs-38 fw-normal text-purple-01 ">Bảng điểm</h4>
+        <div class="row" id="scoreBoard">
+           @* <div class="col-12 col-lg-6 mt-4">
+                <div class="px-abs-20 py-abs-15 box-shadow-2 br-radius-8 bg-white d-flex align-items-center">
+                    <div class="time-block">
+                        <p class="text-purple-01 fs-28">15</p>
+                        <p class="mt-2">Tháng 4</p>
+                    </div>
+                    <div class="me-2 w-min-0 flex-shrink-1 flex-grow-1">
+                        <p class="fs-20 text-purple-01 text-truncate">Cuộc thi SEAMEO CELL OLYMPIA</p>
+                        <p class="mt-2 text-truncate">Listening, Reading, Writing</p>
+                        <div class="d-flex align-items-center mt-2 text-truncate">
+                            <img alt="icon-rate-scoreboard" src="~/images/icon-rate-scoreboard.png" />
+                            <p class="ms-2 text-truncate">Nguyễn văn A</p>
+                        </div>
+                    </div>
+                    <button class="btn scoreboard-detail-btn">
+                        Chi tiết
+                        <i class="fa fa-long-arrow-right ms-2" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </div>*@
+           
+        </div>
+        <partial name="_MultiSkeleton" model="@skeletonScoreBoardId" />
+        <partial name="_Pagination" model="@scoreBoardPaginationId" />
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/scoreBoard.js" asp-append-version="true"></script>
+}

@@ -1,0 +1,30 @@
+.branch {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.branch-image {
+    margin-right: 6px;
+    width: 26px;
+    height: auto;
+}
+
+.branch-name {
+    font-family: 'Bauhaus 93';
+    font-size: 28px;
+    line-height: 41px;
+}
+
+.authen-form .form-title {
+    font-family: 'BauhausVi';
+    font-weight: 400;
+    font-size: 22px;
+    line-height: 26px;
+    margin-bottom: 8px;
+}
+
+
+
+
+

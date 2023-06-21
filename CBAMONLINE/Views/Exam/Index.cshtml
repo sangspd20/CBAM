@@ -1,0 +1,298 @@
+﻿@model CBAMONLINE.Models.Exam.Exam.ExamResponse
+@{
+    ViewData["Title"] = "Exam";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>CBAM ONLINE</title>
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <!-- Bootstrap core CSS -->
+    <link href="~/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/lib/simplebar/simplebar.css" rel="stylesheet" />
+
+    <!-- Custom fonts for this template -->
+    <link href="~/lib/fonts/font-awesome/css/font-awesome.min.css"
+          rel="stylesheet"
+          type="text/css" />
+    <link href="~/lib/fonts/boxicons.css" rel="stylesheet" type="text/css" />
+    <!-- Plugin CSS -->
+    <link href="~/lib/toastr.js/toastr.min.css" rel="stylesheet" />
+    <!-- Custom styles for this template -->
+    <link href="~/css/main.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/css/exam.css" rel="stylesheet" asp-append-version="true" />
+</head>
+
+<body class="d-flex flex-column min-vh-100">
+    <!-- Navigation -->
+    <input hidden value="@Model.id" id="examId" />
+    <input hidden value="@ViewBag.ContestId" id="exam-contestId" />
+    <input hidden value="@ViewBag.AutoCaptureScreenSeconds" id="autoCaptureScreenSeconds" />
+
+    <nav class="navbar navbar-expand-lg bg-white header header-exam fixed-top">
+        <div class="container-fluid container-xxl">
+            <div id="count-down-block">
+                <p class="fs-38">
+                    <i class="fa fa-clock-o mr-abs-12 text-purple-01"
+                       aria-hidden="true"></i><span class="text-red-01" id="exam-count-down"></span>
+                </p>
+            </div>
+            <div class="exam-subject br-radius-4 p-2" id="exam-subject">
+                <div class="d-flex align-items-center w-fit-content" id="exam-subject-list">
+                    @*                    <div class="exam-subject-item active">Toán</div>
+                    *@
+                </div>
+            </div>
+            <button onclick="submitExam()" class="btn btn-danger">
+                Nộp bài <i class="fa fa-angle-right ms-2" aria-hidden="true"></i>
+            </button>
+            <!-- User Info -->
+            @*  <div class="user-info dropdown ml-abs-30">
+            <div class="user-img avatar size-46 user-online dropdown-toggle"
+            role="button"
+            data-bs-toggle="dropdown">
+            <img src="~/images/user-img.png" alt="user-img" />
+            </div>
+            <div class="dropdown-menu dropdown-menu-end">
+            <div class="px-abs-20 py-3 d-flex align-items-center br-bottom-gray-02">
+            <div class="user-img avatar size-37">
+            <img src="~/images/user-img.png" alt="user-img" />
+            </div>
+            <p class="fs-16 ms-2 text-truncate" title="Nguyễn Văn A">
+            Nguyễn Văn A
+            </p>
+            </div>
+            <ul class="br-bottom-gray-02">
+            <li>
+            <a class="dropdown-item d-flex align-items-center px-abs-20 py-3 bg-hover-grey"
+            href="#"><i class="bx bx-user me-2 mt-i-2"></i>Tài khoản</a>
+            </li>
+            <li>
+            <a class="dropdown-item d-flex align-items-center px-abs-20 py-3 bg-hover-grey border-top-0"
+            href="#"><i class="bx bx-spreadsheet me-2 mt-i-2"></i>Lịch sử thi</a>
+            </li>
+            <li>
+            <a class="dropdown-item d-flex align-items-center px-abs-20 py-3 bg-hover-grey border-top-0"
+            href="#"><i class="bx bx-history me-2 mt-i-2"></i>Lịch sử giao dịch</a>
+            </li>
+            <li>
+            <a class="dropdown-item d-flex align-items-center px-abs-20 py-3 bg-hover-grey border-top-0"
+            href="#"><i class="bx bx-credit-card me-2 mt-i-2"></i>Nạp thẻ</a>
+            </li>
+            </ul>
+            <ul>
+            <li>
+            <a class="dropdown-item d-flex align-items-center px-abs-20 py-3 bg-hover-grey"
+            href="#">
+            <i class="fa fa-power-off me-2 mt-i-2" aria-hidden="true"></i>Ngôn ngữ
+            </a>
+            </li>
+            <li>
+            <a class="dropdown-item d-flex align-items-center px-abs-20 py-3 bg-hover-grey border-top-0"
+            href="#">
+            <i class="fa fa-globe me-2 mt-i-3" aria-hidden="true"></i>Đăng xuất
+            </a>
+            </li>
+            </ul>
+            </div>
+            </div>*@
+        </div>
+    </nav>
+    <!-- End.Navigation -->
+    <!-- Body -->
+    <div class="container-fluid body-content-exam flex-shrink-1 flex-grow-1 d-flex align-items-start">
+        <div class="w-min-0 flex-shrink-1 flex-grow-1 mt-abs-16 d-flex flex-column position-relative">
+            <!-- <div class="exam-subject box-shadow-2 bg-white br-radius-4 p-4" id='exam-subject'>
+                    <div class="d-flex align-items-center w-fit-content">
+                        <div class="exam-subject-item active">Toán</div>
+                        <div class="exam-subject-item">Tiếng việt</div>
+                        <div class="exam-subject-item">Tiếng Anh</div>
+                        <div class="exam-subject-item">Khoa học tự nhiên</div>
+                        <div class="exam-subject-item">Khoa học xã hội</div>
+                    </div>
+                </div> -->
+            <div id="question-list" data-simplebar class="question-list">
+                @*  <div class="box-shadow-2 bg-white br-radius-4 mt-3 p-3">
+                <i class='bx bx-play-circle text-purple-01 fs-28'></i>
+                <p class="fs-16">
+                Câu 2: Lorem ipsum dolor sit amet consectetur. Amet libero donec
+                feugiat mauris vitae quam lorem id id.?
+                </p>
+                <ul class="answer-list">
+                <li class="form-check">
+                <input class="form-check-input"
+                type="radio"
+                name="ans-2"
+                id="ans-2-a"
+                value="" />
+                <label class="form-check-label" for="ans-2-a">
+                A. Lorem ipsum dolor sit amet consectetur.
+                </label>
+                </li>
+                <li class="form-check checked">
+                <input class="form-check-input"
+                type="radio"
+                name="ans-2"
+                id="ans-2-b"
+                value=""
+                checked />
+                <label class="form-check-label" for="ans-2-b">
+                B. Lorem ipsum dolor sit amet consectetur.
+                </label>
+                </li>
+                <li class="form-check">
+                <input class="form-check-input"
+                type="radio"
+                name="ans-3"
+                id="ans-3-c"
+                value="" />
+                <label class="form-check-label" for="ans-3-c">
+                C. Lorem ipsum dolor sit amet consectetur.
+                </label>
+                </li>
+                <li class="form-check">
+                <input class="form-check-input"
+                type="radio"
+                name="ans-2"
+                id="ans-2-d"
+                value="" />
+                <label class="form-check-label" for="ans-2-d">
+                D. Lorem ipsum dolor sit amet consectetur.
+                </label>
+                </li>
+                </ul>
+                </div>
+
+                <div class="box-shadow-2 bg-white br-radius-4 mt-3 p-3 question-2-screen d-flex">
+                <div class="question-left w-50">
+                <i class='bx bx-play-circle text-purple-01 fs-28'></i>
+                </div>
+                <div class="question-right w-50">
+                <p class="fs-16">
+                Câu 2: Lorem ipsum dolor sit amet consectetur. Amet libero donec
+                feugiat mauris vitae quam lorem id id.?
+                </p>
+                <ul class="answer-list">
+                <li class="form-check">
+                <input class="form-check-input"
+                type="radio"
+                name="ans-2"
+                id="ans-2-a"
+                value="" />
+                <label class="form-check-label" for="ans-2-a">
+                A. Lorem ipsum dolor sit amet consectetur.
+                </label>
+                </li>
+                <li class="form-check checked">
+                <input class="form-check-input"
+                type="radio"
+                name="ans-2"
+                id="ans-2-b"
+                value=""
+                checked />
+                <label class="form-check-label" for="ans-2-b">
+                B. Lorem ipsum dolor sit amet consectetur.
+                </label>
+                </li>
+                <li class="form-check">
+                <input class="form-check-input"
+                type="radio"
+                name="ans-3"
+                id="ans-3-c"
+                value="" />
+                <label class="form-check-label" for="ans-3-c">
+                C. Lorem ipsum dolor sit amet consectetur.
+                </label>
+                </li>
+                <li class="form-check">
+                <input class="form-check-input"
+                type="radio"
+                name="ans-2"
+                id="ans-2-d"
+                value="" />
+                <label class="form-check-label" for="ans-2-d">
+                D. Lorem ipsum dolor sit amet consectetur.
+                </label>
+                </li>
+                </ul>
+                </div>
+
+                </div>*@
+
+
+            </div>
+            <div id="next-subject" class="  w-100 br-radius-4 d-flex justify-content-center d-none">
+                <button id="btn-next-subject" onclick="nextSubject()" class="btn btn-primary"> Tiếp theo <i class="fa fa-angle-right ms-2"></i></button>
+                <button onclick="submitExam()" id="btn-submit-subject" class="btn btn-danger d-none">
+                    Nộp bài <i class="fa fa-angle-right ms-2" aria-hidden="true"></i>
+                </button>
+            </div>
+
+        </div>
+        <div class="w-abs-240 ms-4 mt-abs-40">
+            <div class="box-shadow-2 bg-white br-radius-4 pt-abs-20 pb-2">
+                <div class="px-abs-10">
+                    <div class="text-center d-flex justify-content-between align-items-center">
+                        <p>Bảng câu hỏi</p>
+                        <p id="sumAnsweredText" class="text-red-01 fs-20">99/100</p>
+                    </div>
+                    <hr class="divider my-abs-12" />
+                </div>
+                <div data-simplebar class="list-ans-check">
+                    <div id="listAnswered" class="d-flex flex-wrap">
+                        @*<div class="ans-check-item complete">1</div>
+                        <div class="ans-check-item">2</div>    *@
+                    </div>
+                </div>
+            </div>
+            <div class="box-shadow-2 bg-white br-radius-4 p-3 mt-abs-15">
+                <p class="mb-abs-12">Khách dự thi</p>
+               @* <div class="user-img avatar size-210">
+                    <img src="~/images/user-img.png" alt="user-img" />
+                </div>*@
+
+                <div id="my-camera" class=" mx-auto">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- End.Body -->
+    <!-- ************************* Javascript Files ************************* -->
+    <!-- Bootstrap core JavaScript -->
+    <script src="~/lib/jquery/jquery.min.js "></script>
+    <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="~/lib/simplebar/simplebar.min.js"></script>
+    <script src="~/lib/toastr.js/toastr.min.js"></script>
+    <script src="~/lib/moment.js/moment-with-locales.min.js"></script>
+    <script src="~/lib/sweetalerts/sweetalert2.min.js"></script>
+    <script src="~/lib/localbase/localbase.min.js"></script>
+    <script src="~/lib/html2canvas/html2canvas.min.js"></script>
+    <script src="~/lib/webcamjs/webcam.min.js"></script>
+
+    <!-- Custom scripts for this template -->
+    <script src="~/js/shared/constants.js" asp-append-version="true"></script>
+    <script src="~/js/shared/text.js" asp-append-version="true"></script>
+    <script src="~/js/shared/utils.js" asp-append-version="true"></script>
+    <script src="~/js/shared/ajaxService.js" asp-append-version="true"></script>
+
+    <script asp-append-version="true">
+        var examModel = @Json.Serialize(Model);
+    </script>
+    <script type="text/javascript" src="~/js/main.js" asp-append-version="true"></script>
+    <script type="text/javascript" src="~/js/exam.js" asp-append-version="true"></script>
+
+   
+</body>
+</html>
+
+

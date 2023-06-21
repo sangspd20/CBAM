@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>@ViewData["Title"] - CBAMONLINE</title>
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <!-- Bootstrap core CSS -->
+    <link href="~/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/lib/bootstrap-datepicker/css/bootstrap-datepicker3.min.css" rel="stylesheet" />
+
+    <!-- Custom fonts for this template -->
+    <link href="~/lib/fonts/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/lib/fonts/boxicons.css" rel="stylesheet" type="text/css" />
+    <!-- Plugin CSS -->
+    <link href="~/lib/toastr.js/toastr.min.css" rel="stylesheet" />
+    <link href="~/lib/simplebar/simplebar.css" rel="stylesheet" />
+
+    <!-- Custom styles for this template -->
+    <link href="~/css/main.css" rel="stylesheet" />
+</head>
+
+<body class="d-flex flex-column min-vh-100">
+    <!-- Navigation -->
+    <partial name="_Navbar" />
+    <!-- End.Navigation -->
+    <!-- Body -->
+    <div class="container-fluid container-lg body-content">
+        @RenderBody()
+    </div>
+    <!-- End.Body -->
+    <!-- Footer -->
+    <partial name="_Footer" />
+    <!-- End.Footer -->
+    <!-- ************************* Javascript Files ************************* -->
+    <!-- Bootstrap core JavaScript -->
+    <script src="~/lib/jquery/jquery.min.js "></script>
+    <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+    <script src="~/lib/bootstrap-datepicker/locales/bootstrap-datepicker.vi.min.js"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="~/lib/simplebar/simplebar.min.js"></script>
+    <script src="~/lib/toastr.js/toastr.min.js"></script>
+    <script src="~/lib/jquery.twbspagination/jquery.twbspagination.min.js"></script>
+    <script src="~/lib/moment.js/moment-with-locales.min.js"></script>
+    <script src="~/lib/sweetalerts/sweetalert2.min.js"></script>
+
+    <!-- Custom scripts for this template -->
+    <script src="~/js/shared/constants.js" asp-append-version="true"></script>
+    <script src="~/js/shared/text.js" asp-append-version="true"></script>
+    <script src="~/js/shared/utils.js" asp-append-version="true"></script>
+    <script src="~/js/shared/ajaxService.js" asp-append-version="true"></script>
+
+    <script type="text/javascript " src="~/js/main.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+    <partial name="_Notification" />
+</body>
+
+</html>

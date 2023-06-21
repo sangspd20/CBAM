@@ -1,0 +1,92 @@
+﻿@{
+    var examHistoryPaginationId = "exam-history-pagination";
+    var skeletonExamHistoryId = "exam-history-skeleton";
+}
+<div class="tab-pane fade" id="exam" role="tabpanel" aria-labelledby="exam-tab">
+    <div class="p-2 p-sm-4 box-shadow-2 br-radius-8 bg-white">
+        <p class="fs-20 text-gray-04 mb-4">Lịch sử thi</p>
+        <div class="container-fluid px-0">
+            <div class="accordion" id="accordionExamHistory">
+                @* <div class="accordion-item">
+                <h2 class="accordion-header position-relative"
+                id="headingOne">
+                <button class="accordion-button"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#collapseOne"
+                aria-expanded="true"
+                aria-controls="collapseOne">
+                1. Làm bài thi GDCD
+                </button>
+                <button class="btn btn-primary btn-sm me-2 btn-edit-exam">
+                <i class="bx bxs-edit"></i>
+                Thay đổi
+                </button>
+                </h2>
+                <div id="collapseOne"
+                class="accordion-collapse collapse show"
+                aria-labelledby="headingOne"
+                data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                <table id="exam-table" class="table custom-table">
+                <thead>
+                <tr class="d-flex">
+                <th class="col-3">Vòng thi</th>
+                <th class="col-3">Môn thi</th>
+                <th class="col-1 text-center">Hạng</th>
+                <th class="col-3">Thời gian hoàn thành</th>
+                <th class="col-2 text-end">Ngày thi</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="d-flex">
+                <td class="col-3">Vòng 1</td>
+                <td class="col-3">
+                <p>
+                Toán
+                <span class="text-gray-01">90/100</span> câu
+                </p>
+                <p>
+                Văn
+                <span class="text-gray-01">90/100</span> câu
+                </p>
+                </td>
+                <td class="col-1 text-purple-01 text-center">
+                #1
+                </td>
+                <td class="col-3">00:30:00</td>
+                <td class="col-2 text-end">6/4/2023</td>
+                </tr>
+
+                </tbody>
+                </table>
+                </div>
+                </div>
+                </div>*@
+            </div>
+
+            <partial name="_Skeleton" model="@skeletonExamHistoryId" />
+            <partial name="_Pagination" model="@examHistoryPaginationId" />
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="updateExamProfileModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="updateExamProfileModalpLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="updateExamProfileModalpLabel">Cập nhật thông tin cuộc thi</h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <partial name="_ContestForm" />
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Thoát</button>
+                <button onclick="updateExamProfile()" type="button" class="btn btn-primary">Lưu</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,53 @@
+﻿<form autocomplete="off" id="updateExamProfileForm" onsubmit="return false;">
+    <div class="row">
+        <input id="examId" hidden />
+        <div class="col-sm-6 mb-4 form-group-item">
+            <label class="form-label" for="examLastName">Họ <partial name="_RequiredField" /></label>
+            <input required autocomplete="off" type="text" class="form-control" placeholder="Nhập họ" tabindex="1" id="examLastName" name="examLastName">
+        </div>
+        <div class="col-sm-6 mb-4 form-group-item">
+            <label class="form-label" for="examFirstName">Tên <partial name="_RequiredField" /></label>
+            <input required autocomplete="off" type="text" class="form-control" placeholder="Nhập tên" tabindex="2" id="examFirstName"
+                   name="examFirstName">
+        </div>
+        <div class="col-sm-6 mb-4 form-group-item">
+            <label for="birthDate" class="form-label">Ngày tháng năm sinh <partial name="_RequiredField" /></label>
+            <input placeholder="Chọn ngày tháng năm sinh" required type="text" autocomplete="off" class="form-control datepicker"
+                   tabindex="3" id="examBirthDate" name="examBirthDate">
+
+        </div>
+        <div class="col-sm-6 mb-4 form-group-item">
+            <label for="examAddress" class="form-label">Địa chỉ <partial name="_RequiredField" /></label>
+            <input required type="text" autocomplete="off" placeholder="Nhập địa chỉ" class="form-control" tabindex="4"
+                   id="examAddress" name="examAddress" value="">
+        </div>
+        <div class="col-sm-6 mb-4 form-group-item">
+            <label for="city" class="form-label">Tỉnh/ thành phố <partial name="_RequiredField" /></label>
+            <select onchange="changeCity()" id="city" name="city" class="form-select" tabindex="5" required>
+                <option hidden selected value="">Chọn tỉnh/ thành phố</option>
+            </select>
+
+        </div>
+        <div class="col-sm-6 mb-4 form-group-item">
+            <label for="province" class="form-label">Quận/ Huyện <partial name="_RequiredField" /></label>
+            <select id="province" class="form-select" name="province" tabindex="6" required>
+                <option hidden selected value="">Chọn quận/ huyện</option>
+            </select>
+        </div>
+        <div class="col-sm-6 mb-4 form-group-item">
+            <label for="school" class="form-label">Trường học <partial name="_RequiredField" /></label>
+            <input required type="text" autocomplete="off" placeholder="Nhập trường học" class="form-control" tabindex="7"
+                   id="school" name="school" value="">
+        </div>
+        <div class="col-sm-6 mb-4 form-group-item">
+            <label for="examClass" class="form-label">Lớp <partial name="_RequiredField" /></label>
+            <input required type="text" autocomplete="off" placeholder="Nhập lớp" class="form-control" tabindex="8"
+                   id="examClass" name="examClass" value="">
+        </div>
+        <div class="col-sm-6 form-group-item">
+            <label required for="examPhone" class="form-label">Số điện thoại phụ huynh <partial name="_RequiredField" /></label>
+            <input required maxlength="10" type="text" autocomplete="off" placeholder="Nhập số điện thoại" class="form-control field-number" tabindex="9"
+                   id="examPhone" name="examPhone">
+        </div>
+    </div>
+</form>

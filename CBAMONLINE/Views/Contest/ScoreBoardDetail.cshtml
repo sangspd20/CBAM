@@ -1,0 +1,67 @@
+﻿
+@{
+    ViewData["Title"] = "Chi tiết bảng điểm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var scoreBoardPaginationId = "score-board-detail-pagination";
+    var skeletonScoreBoardId = new MultiSkeleton();
+    skeletonScoreBoardId.id = "score-board-detail-skeleton";
+    skeletonScoreBoardId.number = 3;
+}
+
+<div>
+    <input id="slug" value="@ViewBag.Slug" hidden/>
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+            <li class="breadcrumb-item"><a asp-action="ScoreBoard" asp-controller="Contest">Bảng điểm</a></li>
+            <li  class="breadcrumb-item active name" aria-current="page"></li>
+        </ol>
+    </nav>
+
+    <!-- Layout -->
+    <div class="p-4 box-shadow-2 br-radius-8 bg-white scoreboard-detail">
+        <p class="text-purple-01 fs-38 mb-abs-32 name"></p>
+        <div class="container-fluid px-0">
+            <div id="round-list">
+@*                <button class="btn btn-primary">Vòng 1</button>
+*@            </div>
+            <table id="score-board-detail-table" class="table custom-table">
+                <thead>
+                    <tr class="d-flex">
+                        <th class="col-auto w-abs-70 text-purple-01 text-center">#</th>
+                        <th class="col">Tên</th>
+                        <th class="col-5">Điểm</th>
+                        <th class="col-2">Thời gian</th>
+                        <th class="col-2 text-end">Ngày thi</th>
+                    </tr>
+                </thead>
+                <tbody id="score-board-detail-body">
+                    <tr class="d-flex">
+                        <td class="col-auto w-abs-70 text-purple-01 text-center">1</td>
+                        <td class="col">
+                            <div class="d-flex align-items-center">
+                                <i class='bx bxs-user-circle me-2 fs-22'></i>Nguyễn Văn A
+                            </div>
+                        </td>
+                        <td class="col-5">
+                            Tổng: 100 - <span class="fs-12"> Listening: 100, Reading: 100, Writing:100 Speaking: 100</span>
+                        </td>
+                        <td class="col-2">00:45:00</td>
+                        <td class="col-2 text-end">01-02-2023</td>
+                    </tr>
+                 
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <partial name="_MultiSkeleton" model="@skeletonScoreBoardId" />
+    <partial name="_Pagination" model="@scoreBoardPaginationId" />
+</div>
+
+@section Scripts {
+    <script src="~/js/scoreBoardDetail.js" asp-append-version="true"></script>
+}
+
+

@@ -1,0 +1,36 @@
+﻿@{
+    var paymentHistoryPaginationId = "payment-history-pagination";
+    var skeletonPaymentHistoryId = "payment-history-skeleton";
+}
+
+<div class="tab-pane fade" id="transaction" role="tabpanel" aria-labelledby="transaction-tab">
+    <div class="p-4 box-shadow-2 transaction-wrapper br-radius-8 bg-white">
+        <p class="fs-20 text-gray-04 mb-4">Lịch sử giao dịch</p>
+        <div class="container-fluid px-0">
+            <table id="transaction-table" class="table custom-table">
+                <thead>
+                    <tr class="d-flex">
+                        <th class="col-1 min-width-100 ">ID</th>
+                        <th class="col-3 min-width-150 ">Kiểu nạp</th>
+                        <th class="col-1 min-width-100 ">Số tiền</th>
+                        <th class="col-5 min-width-250 ">Nội dung</th>
+                        <th class="col-2 min-width-100  text-end">Thời gian</th>
+                    </tr>
+                </thead>
+                <tbody id="transaction-table-body">
+                    @*   <tr class="d-flex">
+                    <td class="col-1 text-purple-01">#123</td>
+                    <td class="col-2 text-red">Hết hạn sử dụng</td>
+                    <td class="col-2">8.400.000đ</td>
+                    <td class="col-5">null</td>
+                    <td class="col-2 text-end">6/4/2023</td>
+                    </tr>*@
+
+                </tbody>
+            </table>
+
+            <partial name="_Skeleton" model="@skeletonPaymentHistoryId" />
+            <partial name="_Pagination" model="@paymentHistoryPaginationId" />
+        </div>
+    </div>
+</div>
